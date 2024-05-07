@@ -1,4 +1,5 @@
 import { Asset, AssetType } from "@/Data/defs";
+import { Dispatch, SetStateAction } from "react";
 
 export interface NewAssetType {
   id: number;
@@ -24,7 +25,9 @@ export interface AssetsContextType {
   handleCloseModal: () => void;
   isModalShown: boolean;
   addAsset: ({ id, type, parent, name }: NewAssetType) => void;
+  handleRemoveAsset: (assetId: number) => void;
   newAssetTextInputValues: { name: string; description: string };
+  setResultAssets: Dispatch<SetStateAction<Asset[]>>;
   handleSetTextValuesAssetChange: (
     event: React.ChangeEvent<HTMLInputElement>
   ) => void;

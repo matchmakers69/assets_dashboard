@@ -1,7 +1,7 @@
-import { cn } from "@/utils/cn";
-import { AssetTypeProps } from "./defs";
+import { cn } from "@/utils/cn"
+import { AssetTypeBadgeProps } from "./defs"
 
-function AssetType({ assetType, className }: AssetTypeProps) {
+function AssetTypeBadge({className, assetType}: AssetTypeBadgeProps) {
   return (
     <div
       className={cn(
@@ -11,7 +11,7 @@ function AssetType({ assetType, className }: AssetTypeProps) {
     >
       {assetType}
     </div>
-  );
+  )
 }
 
-export { AssetType };
+export  {AssetTypeBadge}

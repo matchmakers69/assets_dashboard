@@ -21,6 +21,7 @@ const config: Config = {
         md: "1.8rem",
         lg: "3rem",
         xl: "4rem",
+        "2xl": "6rem",
       },
       colors: {
         "foreground-grey": "rgb(var(--foreground-grey))",

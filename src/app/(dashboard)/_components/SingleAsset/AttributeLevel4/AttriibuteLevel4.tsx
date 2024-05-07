@@ -7,8 +7,8 @@ interface AttributeLevel1Props {
 function AttriibuteLevel4({ attribute }: AttributeLevel1Props) {
   return (
     <>
-      <div className="flex items-center space-x-4">
-        <div className="flex flex-col justify-between">
+      <div className="flex items-center gap-8">
+        <div className="flex flex-col">
           <h5 className="text-[1.4rem] text-text-light font-bold leading-[1.6]">
             {attribute.key}
           </h5>

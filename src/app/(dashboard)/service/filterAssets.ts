@@ -1,14 +1,5 @@
 import { Asset, AssetType } from "@/Data/defs";
 
-// const isAssetMonitored = (asset: Asset, monitored?: boolean) => {
-//   if (monitored === undefined) return true;
-
-//   const isMonitorAttribute = asset.attributes?.find(
-//     (attr) => attr.key === "isMonitored"
-//   );
-//   return isMonitorAttribute ? isMonitorAttribute.value === monitored : false;
-// };
-
 const isAssetMonitored = (asset: Asset, monitored?: boolean): boolean => {
   const isMonitorAttribute = asset.attributes?.find(
     (attr) => attr.key === "isMonitored"

@@ -1,6 +1,6 @@
 import { Asset } from "@/Data/defs";
-import { AssetType } from "../../AssetType";
 import { AttriibuteLevel4 } from "../AttributeLevel4";
+import { AssetCta } from "../AssetCta";
 
 interface AssetLevel3Props {
   asset: Asset;
@@ -9,19 +9,15 @@ interface AssetLevel3Props {
 function AssetLevel3({ asset }: AssetLevel3Props) {
   return (
     <>
-      <div className="flex items-center space-x-4">
-        <AssetType
-          className="bg-pink w-14 h-14 text-[1.6rem]"
-          assetType={asset.type}
-        />
-        <div className="flex flex-col justify-between">
-          <h4 className="text-[1.6rem] text-text-light font-bold leading-[1.6]">
+      <div className="flex items-center gap-8">
+        <AssetCta className="w-14 h-14 bg-dark-blue text-[1.8rem]" asset={asset}>
+        <h5 className="text-[1.4rem] text-text-light font-bold leading-[1.4]">
             {asset.name}
-          </h4>
-        </div>
+          </h5>
+        </AssetCta>
       </div>
 
-      <div className="ml-8 space-y-6">
+      <div className="sm:ml-10 space-y-3">
         {asset.attributes &&
           asset.attributes.length > 0 &&
           asset.attributes.map((attr) => {

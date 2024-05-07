@@ -39,7 +39,7 @@ const FilterTypeSelect = <T extends string | number | Option>({
       >
         {defaultOptionLabel ? null : (
           <option value="" disabled>
-            Choose {defaultValue}
+            {defaultValue}
           </option>
         )}
         {options.map(

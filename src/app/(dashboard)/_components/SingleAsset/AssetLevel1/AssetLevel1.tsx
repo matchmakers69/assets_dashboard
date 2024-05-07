@@ -1,33 +1,23 @@
 import { Asset } from "@/Data/defs";
-import Link from "next/link";
-import { AssetType } from "../../AssetType";
 import { AssetLevel2 } from "../AssetLevel2";
+import { AssetCta } from "../AssetCta";
 
 interface AssetLevel1Props {
   asset: Asset;
 }
 
 function AssetLevel1({ asset }: AssetLevel1Props) {
+
   return (
     <>
-      <div className="flex items-center space-x-4">
-        <AssetType
-          className="bg-green w-20 h-20 text-[2rem]"
-          assetType={asset.type}
-        />
-        <div className="flex flex-col justify-between">
-          <h3 className="text-[1.8rem] text-text-light font-bold leading-[1.6]">
+      <div className="flex items-center gap-8">
+        <AssetCta className="w-20 h-20 bg-green text-[2.2rem]" asset={asset}>
+        <h3 className="text-[1.8rem] text-text-light font-bold leading-[1.6]">
             {asset.name}
           </h3>
-          <Link
-            href={`/assets/${asset.id}`}
-            className="text-sm text-text-dark-blue underline hover:text-zinc-100"
-          >
-            read more
-          </Link>
-        </div>
+        </AssetCta>
       </div>
-      <div className="ml-8 space-y-6">
+      <div className="sm:ml-10 space-y-8 sm:space-y-10 md:space-y-16">
         {asset.children && Array.isArray(asset.children)
           ? asset.children.map((nestedAsset1) => (
               <AssetLevel2 asset={nestedAsset1} key={nestedAsset1.id} />
@@ -39,7 +29,7 @@ function AssetLevel1({ asset }: AssetLevel1Props) {
           asset.attributes.map((attr) => {
             return (
               <div key={attr.key}>
-                <div className="flex flex-col justify-between">
+                <div className="flex flex-col">
                   <h3 className="text-[1.6rem] text-text-light font-bold leading-[1.6]">
                     {attr.key}
                   </h3>

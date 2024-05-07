@@ -1,0 +1,1 @@
+export { AssetTypeBadge } from "./AssetTypeBadge";

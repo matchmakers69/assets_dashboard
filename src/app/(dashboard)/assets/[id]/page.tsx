@@ -1,73 +1,55 @@
-"use client";
-
 import { Title } from "@/components/ui/Title";
-import { useAssetDetails } from "../_hooks/useAssetDetails";
-import { useParams } from "next/navigation";
-import { useContext } from "react";
-import { useAssetsContext } from "@/context/AssetsContext";
-import { Asset } from "@/Data/defs";
+import { getAssetById } from "@/actions/getAssetById";
+import { AssetDetailsProps } from "./defs";
+import Link from "next/link";
+import { AssetTypeBadge } from "../../_components/AssetTypeBadge";
 
-export default function Details() {
-  const params = useParams<{ id: string }>();
-  const { assets } = useAssetsContext();
-  const { singleAsset } = useAssetDetails(Number(params.id));
-
-  const copiedAsstets = structuredClone(assets);
-
-  const sortedData: Asset[] = [];
-
-  const sortData = (asset: Asset) => {
-    const { children } = asset;
-
-    if (children) {
-    }
-
-    sortedData.push(asset);
-    delete asset.children;
-  };
+export default async function Details({ params }: AssetDetailsProps) {
+  const { data: asset } = await getAssetById(params.id);
+  if (!asset) return;
 
   return (
     <section className="text-text-light">
       <div className="container mx-auto">
-        <Title title="Details" />
-        detale
+        <Title title={`Details for asset with ID - ${asset.id}`} />
+        <div className="flex justify-start items-center gap-6 mb-10">
+          <AssetTypeBadge
+            assetType={asset.type}
+            className="w-24 h-24 sm:w-32 sm:h-32 md:h-44 md:w-44 text-[3rem] sm:text-[4rem] md:text-[6rem]"
+          />
+          <div className="flex flex-col justify-between">
+            <h2 className="text-[2.2rem uppercase md:text-[8rem] text-text-light font-bold leading-[1.6]">
+              {asset.name}
+            </h2>
+          </div>
+        </div>
+        {asset.description && (
+          <div>
+            <p className="text-text-light text-[2.6rem] md:text-[2.8rem] mb-4 font-semibold">
+              {asset.description}
+            </p>
+          </div>
+        )}
+        {asset.attributes && asset.attributes.length > 0 && (
+          <ul>
+            {asset.attributes.map((attribute) => (
+              <li key={attribute.key}>
+                <div>{attribute.key}</div>
+                {attribute.value && <div>{attribute.value}</div>}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <footer className="py-10 flex justify-center w-full">
+          <Link
+            className="text-light-text w-[20rem] font-semibold uppercase flex flex-col justify-center items-center bg-pink h-[5rem]"
+            href="/"
+          >
+            Go to dashboard
+          </Link>
+        </footer>
       </div>
     </section>
   );
 }
-
-interface Tree {
-  id: number;
-  type: string;
-  children: Tree[];
-}
-
-interface FlattenTree {
-  id: number;
-  parentId?: number;
-  type: string;
-  level: number;
-}
-
-const tree: Tree[] = [
-  {
-    id: 1,
-    type: "cos",
-    children: [
-      { id: 2, type: "cs2", children: [{ id: 3, type: "cos", children: [] }] },
-    ],
-  },
-];
-
-const flattenTree: FlattenTree[] = [
-  {
-    id: 1,
-    type: "cos",
-    level: 0,
-  },
-  { id: 2, type: "cs2", parentId: 1, level: 1 },
-  { id: 3, type: "cos", parentId: 2, level: 2 },
-];
-
-// Level 1
-// Level 2

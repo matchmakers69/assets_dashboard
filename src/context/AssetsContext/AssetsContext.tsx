@@ -11,7 +11,7 @@ import {
 import { AssetsContextType, NewAssetType } from "./defs";
 import { Asset, AssetType } from "@/Data/defs";
 import { filterAssets } from "@/app/(dashboard)/service/filterAssets";
-
+import { removeAssetById } from "@/app/(dashboard)/service/removeAssetById";
 
 export const AssetsContext = createContext<AssetsContextType | null>(null);
 
@@ -54,7 +54,6 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
     setMonitoredFilter(checked ? true : null);
   };
 
-
   const handleSelectAssetTypeChange = (type: AssetType) => {
     return setSelectedAssetType(type);
   };
@@ -67,11 +66,10 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
     }
   }, [assets, filterType, monitoredFilter]);
 
-
   useEffect(() => {
     const fetchAssets = async () => {
       try {
-        const { data: response } = await axios.get("/api/assets");
+        const { data: response } = await axios.get("/api/assets/get/all");
         setAssets(response);
         setResultAssets(response);
         setLoading(false);
@@ -109,7 +107,6 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
       const addAssetToParent = (assets: Asset[], parentId: number): Asset[] => {
         return assets.map((asset) => {
           if (asset.id === parentId) {
-            // We need to make sure children is an Array not an object
             const existingChildren = Array.isArray(asset.children)
               ? asset.children
               : asset.children
@@ -117,7 +114,6 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
               : [];
             return { ...asset, children: [...existingChildren, newAsset] };
           } else if (asset.children) {
-            // If children is not empty we add asset in recursive way normalizing children to array
             const normalizedChildren = Array.isArray(asset.children)
               ? asset.children
               : [asset.children];
@@ -136,6 +132,14 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
         : [...prevState, newAsset];
     });
   };
+
+  const handleRemoveAsset = useCallback(
+    (assetId: number) => {
+      const filteredAssets = removeAssetById(assetId, assets);
+      setAssets(filteredAssets);
+    },
+    [assets]
+  );
 
   const handleOpenModal = () => {
     setIsModalShown(true);
@@ -170,8 +174,22 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
       isModalShown,
       newAssetTextInputValues,
       handleSetTextValuesAssetChange,
+      handleRemoveAsset,
+      setResultAssets,
     }),
-    [assetId, filterType, handleSetTextValuesAssetChange, isModalShown, monitoredFilter, loading, newAssetTextInputValues, resultAssets, selectedAssetType]
+    [
+      resultAssets,
+      loading,
+      filterType,
+      selectedAssetType,
+      assetId,
+      monitoredFilter,
+      isModalShown,
+      newAssetTextInputValues,
+      handleSetTextValuesAssetChange,
+      handleRemoveAsset,
+      setResultAssets,
+    ]
   );
   return (
     <AssetsContext.Provider value={value}>{children}</AssetsContext.Provider>

@@ -1,6 +1,6 @@
 import { AssetType } from "@/Data/defs";
 
-export interface AssetTypeProps {
+export interface AssetTypeBadgeProps {
   assetType?: AssetType;
   className?: string;
 }

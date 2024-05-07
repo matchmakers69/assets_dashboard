@@ -47,8 +47,8 @@ function AddAssetForm() {
             onChange={handleSetAssetIdChange}
             value={assetId}
             id="parent"
-            defaultValue="parent"
-            label="Select parent"
+            defaultValue="Top level"
+            label="Select parent ID for level"
             options={assetIds}
           />
         </div>
@@ -57,7 +57,7 @@ function AddAssetForm() {
             onChange={handleSelectAssetTypeChange}
             value={selectedAssetType || ""}
             id="assetType"
-            defaultValue="asset type"
+            defaultValue="Asset type"
             label="Select asset type"
             options={Object.values(AssetType)}
           />
@@ -67,6 +67,7 @@ function AddAssetForm() {
             onChange={handleSetTextValuesAssetChange}
             value={newAssetTextInputValues.name}
             name="name"
+            placeholder="Asset name"
             label="Assets name"
           />
         </div>
@@ -77,6 +78,7 @@ function AddAssetForm() {
             value={newAssetTextInputValues.description}
             name="description"
             label="Description"
+            placeholder="Asset description"
           />
         </div>
 

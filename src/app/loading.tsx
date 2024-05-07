@@ -2,7 +2,7 @@ const Loading = () => {
   return (
     <section className="py-24">
       <div className="container">
-        <h2 className="text-2xl">Loading...</h2>
+        <p className="text-2xl text-text-light">Loading data...</p>
       </div>
     </section>
   );
