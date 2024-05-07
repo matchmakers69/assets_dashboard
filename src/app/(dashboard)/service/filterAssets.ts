@@ -1,39 +1,47 @@
 import { Asset, AssetType } from "@/Data/defs";
 
-const isAssetMonitored = (asset: Asset, monitored?: boolean) => {
-  if (monitored === undefined) return true;
+// const isAssetMonitored = (asset: Asset, monitored?: boolean) => {
+//   if (monitored === undefined) return true;
 
+//   const isMonitorAttribute = asset.attributes?.find(
+//     (attr) => attr.key === "isMonitored"
+//   );
+//   return isMonitorAttribute ? isMonitorAttribute.value === monitored : false;
+// };
+
+const isAssetMonitored = (asset: Asset, monitored?: boolean): boolean => {
   const isMonitorAttribute = asset.attributes?.find(
     (attr) => attr.key === "isMonitored"
   );
   return isMonitorAttribute ? isMonitorAttribute.value === monitored : false;
 };
 
-export const filterByType = (
+export const filterAssets = (
   assets: Asset[],
-  type: AssetType,
-  isMonitored?: boolean
-) => {
-  return assets.reduce((acc: Asset[], asset) => {
+  typeFilter: AssetType | null,
+  monitoredFilter: boolean | null
+): Asset[] => {
+  return assets.reduce((filteredAssets: Asset[], asset) => {
     let filteredChildren: Asset[] = [];
 
     if (asset.children) {
-      filteredChildren = filterByType(
+      filteredChildren = filterAssets(
         Array.isArray(asset.children) ? asset.children : [asset.children],
-        type,
-        isMonitored
+        typeFilter,
+        monitoredFilter
       );
     }
 
-    const matchesType = asset.type === type;
-    const matchesMonitoring = isAssetMonitored(asset, isMonitored);
+    const matchesTypeFilter = typeFilter === null || asset.type === typeFilter;
+    const matchesMonitoredFilter =
+      monitoredFilter === null || isAssetMonitored(asset, monitoredFilter);
 
-    if (matchesType && matchesMonitoring) {
-      acc.push({ ...asset, children: filteredChildren });
+    if (matchesTypeFilter && matchesMonitoredFilter) {
+      filteredAssets.push({ ...asset, children: filteredChildren });
     } else if (filteredChildren.length > 0) {
-      acc.push({ ...asset, type: asset.type, children: filteredChildren });
+      filteredAssets.push({ ...asset, children: filteredChildren });
     }
 
-    return acc;
+    return filteredAssets;
   }, []);
 };

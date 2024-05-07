@@ -1,4 +1,5 @@
 import { Asset } from "@/Data/defs";
+import Link from "next/link";
 import { AssetType } from "../../AssetType";
 import { AssetLevel2 } from "../AssetLevel2";
 
@@ -18,6 +19,12 @@ function AssetLevel1({ asset }: AssetLevel1Props) {
           <h3 className="text-[1.8rem] text-text-light font-bold leading-[1.6]">
             {asset.name}
           </h3>
+          <Link
+            href={`/assets/${asset.id}`}
+            className="text-sm text-text-dark-blue underline hover:text-zinc-100"
+          >
+            read more
+          </Link>
         </div>
       </div>
       <div className="ml-8 space-y-6">

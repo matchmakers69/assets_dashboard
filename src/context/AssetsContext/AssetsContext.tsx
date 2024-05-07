@@ -1,9 +1,17 @@
 "use client";
 import axios from "axios";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { AssetsContextType, NewAssetType } from "./defs";
 import { Asset, AssetType } from "@/Data/defs";
-import { filterByType } from "@/app/(dashboard)/service/filterAssets";
+import { filterAssets } from "@/app/(dashboard)/service/filterAssets";
+
 
 export const AssetsContext = createContext<AssetsContextType | null>(null);
 
@@ -22,35 +30,43 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const [assets, setAssets] = useState<Asset[]>([]);
   const [resultAssets, setResultAssets] = useState<Asset[]>([]);
   const [filterType, setFilterType] = useState<AssetType | null>(null);
-  const [isMonitored, setIsMonitored] = useState<boolean>(false);
+  const [monitoredFilter, setMonitoredFilter] = useState<boolean | null>(null);
+  const [selectedAssetType, setSelectedAssetType] = useState<AssetType | null>(
+    null
+  );
+  const [assetId, setAssetId] = useState<number | null>(null);
+
+  const [newAssetTextInputValues, setNewAssetTextInputValues] = useState({
+    name: "",
+    description: "",
+  });
   const [loading, setLoading] = useState(true);
 
-  const handleOpenModal = () => {
-    setIsModalShown(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalShown(false);
-  };
-
-  const handleSetFilterTypeChange = (type: AssetType | "") => {
+  const handleTypeFilterChange = (type: AssetType | "") => {
     if (type === "") {
-      return setFilterType(null);
+      setFilterType(null);
+    } else {
+      setFilterType(type);
     }
-    return setFilterType(type);
   };
 
-  const handleSetIsMonitoredChecked = (isMonitored: boolean) => {
-    return setIsMonitored(isMonitored);
+  const handleMonitoredFilterChange = (checked: boolean) => {
+    setMonitoredFilter(checked ? true : null);
+  };
+
+
+  const handleSelectAssetTypeChange = (type: AssetType) => {
+    return setSelectedAssetType(type);
   };
 
   useEffect(() => {
-    if (filterType !== null) {
-      setResultAssets(filterByType(assets, filterType, isMonitored));
+    if (filterType !== null || monitoredFilter !== null) {
+      setResultAssets(filterAssets(assets, filterType, monitoredFilter));
     } else {
       setResultAssets(assets);
     }
-  }, [assets, filterType, isMonitored]);
+  }, [assets, filterType, monitoredFilter]);
+
 
   useEffect(() => {
     const fetchAssets = async () => {
@@ -68,6 +84,17 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   // Create new asset
+  const handleSetTextValuesAssetChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { value, name } = event.target;
+      setNewAssetTextInputValues((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    },
+    []
+  );
+
   const addAsset = ({ id, type, parent, name }: NewAssetType) => {
     setFilterType(null);
 
@@ -110,20 +137,41 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const handleOpenModal = () => {
+    setIsModalShown(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalShown(false);
+  };
+
+  const handleSetAssetIdChange = (id: number | null) => {
+    if (id === null) {
+      return setAssetId(null);
+    }
+    return setAssetId(id);
+  };
+
   const value = useMemo(
     () => ({
       assets: resultAssets,
       loading,
       filterType,
-      handleSetFilterTypeChange,
-      handleSetIsMonitoredChecked,
-      isMonitored,
+      selectedAssetType,
+      handleTypeFilterChange,
+      handleSelectAssetTypeChange,
+      handleMonitoredFilterChange,
+      handleSetAssetIdChange,
+      assetId,
+      monitoredFilter,
       addAsset,
       handleOpenModal,
       handleCloseModal,
       isModalShown,
+      newAssetTextInputValues,
+      handleSetTextValuesAssetChange,
     }),
-    [filterType, isModalShown, isMonitored, loading, resultAssets]
+    [assetId, filterType, handleSetTextValuesAssetChange, isModalShown, monitoredFilter, loading, newAssetTextInputValues, resultAssets, selectedAssetType]
   );
   return (
     <AssetsContext.Provider value={value}>{children}</AssetsContext.Provider>

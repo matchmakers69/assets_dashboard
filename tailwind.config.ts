@@ -30,6 +30,7 @@ const config: Config = {
         "text-dark": "rgb(var(--text-dark))",
         green: "rgb(var(--green))",
         pink: "rgb(var(--pink))",
+        "light-pink": "rgb(var(--light-pink))",
         brown: "rgb(var(--brown))",
         "dark-green": "rgb(var(--dark-green))",
         purple: "rgb(var(--purple))",

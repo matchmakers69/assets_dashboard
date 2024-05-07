@@ -19,14 +19,13 @@ export default function Details() {
   const sortData = (asset: Asset) => {
     const { children } = asset;
 
-    sortedData.push(asset);
-
     if (children) {
     }
+
+    sortedData.push(asset);
+    delete asset.children;
   };
 
-  console.log(params, "params");
-  console.log(singleAsset, "vggfbrt");
   return (
     <section className="text-text-light">
       <div className="container mx-auto">
@@ -36,3 +35,39 @@ export default function Details() {
     </section>
   );
 }
+
+interface Tree {
+  id: number;
+  type: string;
+  children: Tree[];
+}
+
+interface FlattenTree {
+  id: number;
+  parentId?: number;
+  type: string;
+  level: number;
+}
+
+const tree: Tree[] = [
+  {
+    id: 1,
+    type: "cos",
+    children: [
+      { id: 2, type: "cs2", children: [{ id: 3, type: "cos", children: [] }] },
+    ],
+  },
+];
+
+const flattenTree: FlattenTree[] = [
+  {
+    id: 1,
+    type: "cos",
+    level: 0,
+  },
+  { id: 2, type: "cs2", parentId: 1, level: 1 },
+  { id: 3, type: "cos", parentId: 2, level: 2 },
+];
+
+// Level 1
+// Level 2
