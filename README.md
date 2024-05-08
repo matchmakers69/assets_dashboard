@@ -1,3 +1,19 @@
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
 ### Developer notes
 
 A/C provided for task don't let to use Next.js features in full (mock data used as initial state of data).According to that application works more as a client not server.
