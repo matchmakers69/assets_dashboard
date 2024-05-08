@@ -10,7 +10,16 @@ export default async function Details({ params }: AssetDetailsProps) {
     <div>Error occured</div>
   }
   if (!asset) {
-    return <div><p className="font-bold text-center px-10 py-10 text-text-light text-2xl">Asset cannot be found. No databse added.</p></div>
+    return <div className="flex flex-col max-w-[60re] w-full pt-20 items-center justify-center gap-10">
+      <p className="font-bold text-center px-10 py-10 text-text-light text-2xl">Asset cannot be found. No databse added.</p>
+      <Link
+            className="text-text-light w-[20rem] font-semibold uppercase flex flex-col justify-center items-center bg-pink h-[5rem]"
+            href="/"
+          >
+            Go to dashboard
+          </Link>
+        
+    </div>
   };
 
   return (
@@ -67,7 +76,7 @@ export default async function Details({ params }: AssetDetailsProps) {
 
         <footer className="py-10 flex justify-center w-full">
           <Link
-            className="text-light-text w-[20rem] font-semibold uppercase flex flex-col justify-center items-center bg-pink h-[5rem]"
+            className="text-text-light w-[20rem] font-semibold uppercase flex flex-col justify-center items-center bg-pink h-[5rem]"
             href="/"
           >
             Go to dashboard
