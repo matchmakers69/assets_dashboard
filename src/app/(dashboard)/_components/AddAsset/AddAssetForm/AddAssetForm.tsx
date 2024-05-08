@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { getAllIds } from "@/app/(dashboard)/service/getAllIds";
 import { FilterTypeSelect } from "../../FilterTypeSelect";
+import { useAppContext } from "@/context/AppContext";
 
 function AddAssetForm() {
   const {
@@ -19,8 +20,9 @@ function AddAssetForm() {
     assets,
     newAssetTextInputValues,
     handleSetTextValuesAssetChange,
-    handleCloseModal,
   } = useAssetsContext();
+
+  const { handleCloseModal } = useAppContext();
 
   const assetIds = getAllIds(assets);
 
@@ -32,10 +34,9 @@ function AddAssetForm() {
       id: generateShortNumericUUID(),
       name: newAssetTextInputValues.name,
       description: newAssetTextInputValues.description,
-      type: selectedAssetType || AssetType.A, // Double check this
+      type: selectedAssetType || AssetType.A,
       parent: Number(assetId) || null,
     };
-    console.log(newAsset);
     addAsset(newAsset);
     handleCloseModal();
   };
