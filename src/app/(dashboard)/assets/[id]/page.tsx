@@ -1,5 +1,5 @@
 import { Title } from "@/components/ui/Title";
-import { getAssetById } from "@/Data/getAssetById-api";
+import { getAssetById } from "@/Data/getAssetByIdApi";
 import { AssetDetailsProps } from "./defs";
 import Link from "next/link";
 import { AssetTypeBadge } from "../../_components/AssetTypeBadge";
