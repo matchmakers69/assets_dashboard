@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { useAssetsContext } from "@/context/AssetsContext";
+import { useAppContext } from "@/context/AppContext/AppContext";
 
 export function AddAsset() {
-  const { handleOpenModal } = useAssetsContext();
+  const { handleOpenModal } = useAppContext();
 
   const handleToggleShowForm = () => {
     handleOpenModal();

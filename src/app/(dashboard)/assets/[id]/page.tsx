@@ -1,5 +1,5 @@
 import { Title } from "@/components/ui/Title";
-import { getAssetById } from "@/actions/getAssetById";
+import { getAssetById } from "@/Data/getAssetById-api";
 import { AssetDetailsProps } from "./defs";
 import Link from "next/link";
 import { AssetTypeBadge } from "../../_components/AssetTypeBadge";
@@ -30,15 +30,34 @@ export default async function Details({ params }: AssetDetailsProps) {
             </p>
           </div>
         )}
+            {asset.children && Array.isArray(asset.children)
+            ? <>
+            <h2 className="text-text-light font-semibold text-[2rem]">
+              Children:
+            </h2>
+            <ul>
+              {asset.children.map((child) => (
+                <li key={child.id}>
+                  {child.name}
+                </li>
+              ))}
+            </ul>
+            </>
+            : null}
         {asset.attributes && asset.attributes.length > 0 && (
-          <ul>
-            {asset.attributes.map((attribute) => (
-              <li key={attribute.key}>
-                <div>{attribute.key}</div>
-                {attribute.value && <div>{attribute.value}</div>}
-              </li>
-            ))}
-          </ul>
+          <>
+            <h2 className="text-text-light font-semibold text-[2rem]">
+              Attributes:
+            </h2>
+            <ul>
+              {asset.attributes.map((attribute) => (
+                <li key={attribute.key}>
+                  <div>{attribute.key}</div>
+                  {attribute.value && <div>{attribute.value}</div>}
+                </li>
+              ))}
+            </ul>
+          </>
         )}
 
         <footer className="py-10 flex justify-center w-full">

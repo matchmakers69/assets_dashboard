@@ -26,7 +26,6 @@ export const useAssetsContext = () => {
 };
 
 export function AssetsProvider({ children }: { children: React.ReactNode }) {
-  const [isModalShown, setIsModalShown] = useState(false);
   const [assets, setAssets] = useState<Asset[]>([]);
   const [resultAssets, setResultAssets] = useState<Asset[]>([]);
   const [filterType, setFilterType] = useState<AssetType | null>(null);
@@ -141,14 +140,6 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
     [assets]
   );
 
-  const handleOpenModal = () => {
-    setIsModalShown(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalShown(false);
-  };
-
   const handleSetAssetIdChange = (id: number | null) => {
     if (id === null) {
       return setAssetId(null);
@@ -169,9 +160,6 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
       assetId,
       monitoredFilter,
       addAsset,
-      handleOpenModal,
-      handleCloseModal,
-      isModalShown,
       newAssetTextInputValues,
       handleSetTextValuesAssetChange,
       handleRemoveAsset,
@@ -184,7 +172,6 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
       selectedAssetType,
       assetId,
       monitoredFilter,
-      isModalShown,
       newAssetTextInputValues,
       handleSetTextValuesAssetChange,
       handleRemoveAsset,

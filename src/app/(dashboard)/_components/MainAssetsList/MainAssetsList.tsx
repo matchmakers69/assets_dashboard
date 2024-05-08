@@ -7,10 +7,12 @@ import { AddAsset } from "../AddAsset";
 import { Modal } from "@/components/ui/Modal";
 import { AddAssetForm } from "../AddAsset/AddAssetForm";
 import { AssetFilters } from "../AssetFilters";
+import { useAppContext } from "@/context/AppContext/AppContext";
 
 export function MainAssetsList() {
-  const { assets, loading, isModalShown, handleCloseModal } =
-    useAssetsContext();
+  const { assets, loading } = useAssetsContext();
+
+  const { isModalInView, handleCloseModal } = useAppContext();
 
   if (loading) return <div>Loading your assets be patient...</div>;
 
@@ -25,7 +27,7 @@ export function MainAssetsList() {
       </div>
 
       <Modal
-        isOpen={isModalShown}
+        isOpen={isModalInView}
         title="Add new asset"
         onClose={handleCloseModal}
       >

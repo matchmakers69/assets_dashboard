@@ -21,13 +21,10 @@ export interface AssetsContextType {
   assetId: number | null;
   monitoredFilter: boolean | null;
   loading: boolean;
-  handleOpenModal: () => void;
-  handleCloseModal: () => void;
-  isModalShown: boolean;
   addAsset: ({ id, type, parent, name }: NewAssetType) => void;
   handleRemoveAsset: (assetId: number) => void;
   newAssetTextInputValues: { name: string; description: string };
-  setResultAssets: Dispatch<SetStateAction<Asset[]>>;
+  setResultAssets?: Dispatch<SetStateAction<Asset[]>>;
   handleSetTextValuesAssetChange: (
     event: React.ChangeEvent<HTMLInputElement>
   ) => void;

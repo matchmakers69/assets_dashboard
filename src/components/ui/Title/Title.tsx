@@ -11,7 +11,7 @@ const rubik = Rubik({
 export function Title({ title }: TitleProps) {
   return (
     <h1
-      className={`${rubik.className}text-lg mb-10 font-extrabold text-text-light uppercase leading-[1.2] md:text-lg`}
+      className={`${rubik.className} text-[2rem] sm:text-lg md:text-[4rem] mb-10 font-extrabold text-text-light uppercase leading-[1.2]`}
     >
       {title}
     </h1>
