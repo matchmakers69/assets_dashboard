@@ -1,13 +1,13 @@
 "use client";
 
-import { AssetType } from "@/Data/defs";
+
 import { SingleAsset } from "../SingleAsset";
-import { useAssetsContext } from "@/context/AssetsContext";
 import { AddAsset } from "../AddAsset";
 import { Modal } from "@/components/ui/Modal";
 import { AddAssetForm } from "../AddAsset/AddAssetForm";
 import { AssetFilters } from "../AssetFilters";
 import { useAppContext } from "@/context/AppContext/AppContext";
+import { useAssetsContext } from "@/context/AssetsContext";
 
 export function MainAssetsList() {
   const { assets, loading } = useAssetsContext();
