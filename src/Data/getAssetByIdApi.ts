@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getAssetById = async (
   id: string
-): Promise<{ status: number; data: ExtendetAsset }> => {
+): Promise<{ status: number; data: ExtendetAsset | undefined; error: any }> => {
   try {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_URL}/api/assets/get/byId/?id=${id}`

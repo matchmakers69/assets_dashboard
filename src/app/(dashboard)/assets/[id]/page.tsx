@@ -5,32 +5,37 @@ import Link from "next/link";
 import { AssetTypeBadge } from "../../_components/AssetTypeBadge";
 
 export default async function Details({ params }: AssetDetailsProps) {
-  const { data: asset } = await getAssetById(params.id);
-  if (!asset) return;
+  const { data: asset, error } = await getAssetById(params.id);
+  if(error) {
+    <div>Error occured</div>
+  }
+  if (!asset) {
+    return <div><p className="font-bold text-center px-10 py-10 text-text-light text-2xl">Asset cannot be found. No databse added.</p></div>
+  };
 
   return (
     <section className="text-text-light">
       <div className="container mx-auto">
-        <Title title={`Details for asset with ID - ${asset.id}`} />
+        <Title title={`Details for asset with ID - ${asset?.id}`} />
         <div className="flex justify-start items-center gap-6 mb-10">
           <AssetTypeBadge
-            assetType={asset.type}
+            assetType={asset?.type}
             className="w-24 h-24 sm:w-32 sm:h-32 md:h-44 md:w-44 text-[3rem] sm:text-[4rem] md:text-[6rem]"
           />
           <div className="flex flex-col justify-between">
             <h2 className="text-[2.2rem uppercase md:text-[8rem] text-text-light font-bold leading-[1.6]">
-              {asset.name}
+              {asset?.name}
             </h2>
           </div>
         </div>
-        {asset.description && (
+        {asset?.description && (
           <div>
             <p className="text-text-light text-[2.6rem] md:text-[2.8rem] mb-4 font-semibold">
               {asset.description}
             </p>
           </div>
         )}
-            {asset.children && Array.isArray(asset.children)
+            {asset?.children && Array.isArray(asset.children)
             ? <>
             <h2 className="text-text-light font-semibold text-[2rem]">
               Children:
@@ -44,7 +49,7 @@ export default async function Details({ params }: AssetDetailsProps) {
             </ul>
             </>
             : null}
-        {asset.attributes && asset.attributes.length > 0 && (
+        {asset?.attributes && asset.attributes.length > 0 && (
           <>
             <h2 className="text-text-light font-semibold text-[2rem]">
               Attributes:
